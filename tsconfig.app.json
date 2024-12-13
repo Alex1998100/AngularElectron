@@ -7,9 +7,16 @@
     "types": []
   },
   "files": [
-    "src/main.ts"
+    "src/angular-main.ts"
   ],
   "include": [
+    "src/**/*.d.ts",
+    "src/app/**/*.ts",
     "src/**/*.d.ts"
-  ]
+  ],
+  "exclude": [ // Exclude electron main file and environment files specific to electron if any
+    "src/electron-main.ts",
+    "src/environments/*.electron.ts",
+    "src/**/*.spec.ts" // Exclude tests (tests are configured separately as in my previous responses)
+   ]
 }
