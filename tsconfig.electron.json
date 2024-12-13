@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json", // Inherit from base config
+  "compilerOptions": {
+    "module": "CommonJS", // For Node.js compatibility. Or System if using outFile
+    "outDir": "./out-tsc/electron-main" // If bundling with outFile, otherwise leave this out
+  },
+
+  // Don't include Angular files here
+  "include": [
+    "src/electron-main.ts" // only include electron file and no Angular files
+  ],
+  "exclude": ["src/angular-main.ts", "src/**/*.spec.ts", "src/app/**/*.ts"]
+}
