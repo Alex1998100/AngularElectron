@@ -3,6 +3,8 @@
   "name": "angular-electron1",
   "version": "0.0.0",
   "scripts": {
+    // execute the Angular build before starting Electron !
+    "build:angular": "ng build",
     "build:electron-main": "tsc -p tsconfig.electron.json",
     "electron:start": "npm run build:electron-main && npx cross-env NODE_ENV=development electron .",
     "electron:build": "electron .",
@@ -22,7 +24,6 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
-    "cross-env": "^7.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

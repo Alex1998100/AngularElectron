@@ -8,15 +8,18 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'), // Add this if using a preload script
     },
   });
 
-  mainWindow?.loadFile(
-    path.join(__dirname, '../dist/AngularElectron/index.html')
-  );
+  const isDev = process.env['NODE_ENV'] !== 'production';
+  const url = isDev ? "http://localhost:4200" : `file://${path.join(__dirname, '../dist/angular-electron1/index.html')}`;
+  mainWindow.loadURL(url);
+
   // Or loadURL if serving in development mode:
-  // mainWindow?.loadURL('http://localhost:4200'); // if Angular is served on this port
+  // mainWindow?.loadFile( path.join(__dirname, '../dist/angular-electron1/index.html') // if Angular is served on this port
 
   mainWindow?.on('ready-to-show', () => {
     // Prevents flicker. Only show when ready
