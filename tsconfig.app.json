@@ -4,19 +4,20 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "moduleResolution": "bundler"
   },
   "files": [
     "src/angular-main.ts"
   ],
   "include": [
-    "src/**/*.d.ts",
+    "src/angular-main.ts", // Your Angular entry point, or whatever it's called
     "src/app/**/*.ts",
     "src/**/*.d.ts"
   ],
   "exclude": [ // Exclude electron main file and environment files specific to electron if any
-    "src/electron-main.ts",
-    "src/environments/*.electron.ts",
-    "src/**/*.spec.ts" // Exclude tests (tests are configured separately as in my previous responses)
-   ]
+  "src/electron-main.ts",
+  "src/environments/*.electron.ts",
+  "src/**/*.spec.ts" // Exclude tests (tests are configured separately as in my previous responses)
+]
 }

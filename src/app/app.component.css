@@ -1,0 +1,26 @@
+.flex-table {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to next row */
+    width: 100%; /* Or a fixed width if you prefer */
+}
+
+.flex-row {
+    display: flex;
+    width: 100%;
+}
+
+
+.flex-cell {
+    flex: 1; /* Distribute available space equally */
+    padding: 10px; /* Add some padding */
+    border: 1px solid #ccc; /* Add borders */
+    box-sizing: border-box; /* Include padding in width calculation */
+    text-align: center; /* Center content within cells */
+}
+
+ /* Example media query for larger screens */
+@media (min-width: 1200px) {  /* Adjust as needed */
+    .flex-table {
+        font-size: 1.2em;  /* Increase font size */
+    }
+}

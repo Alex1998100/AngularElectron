@@ -1,52 +1,33 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 
-let mainWindow: BrowserWindow | null = null;
+let win: BrowserWindow | null;
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      preload: path.join(__dirname, 'preload.js'), // Add this if using a preload script
-    },
-  });
-
-  const isDev = process.env['NODE_ENV'] !== 'production';
-  const url = isDev ? "http://localhost:4200" : `file://${path.join(__dirname, '../dist/angular-electron1/index.html')}`;
-  mainWindow.loadURL(url);
-
-  // Or loadURL if serving in development mode:
-  // mainWindow?.loadFile( path.join(__dirname, '../dist/angular-electron1/index.html') // if Angular is served on this port
-
-  mainWindow?.on('ready-to-show', () => {
-    // Prevents flicker. Only show when ready
-    mainWindow?.show(); // Show the window
-    if (process.env['NODE_ENV'] === 'development') {
-      mainWindow?.webContents.openDevTools();
-    }
-  });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+    console.log("__dirname:", __dirname);
+    console.log('preload path:', path.resolve(__dirname, '..', '..', 'dist', 'angular-electron1', 'browser', 'preload.js')) 
+    console.log('index.html path:', path.resolve(process.cwd(), 'dist', 'angular-electron1', 'browser', 'index.html'))
+    win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false, 
+            //preload: path.resolve(__dirname, '..', '..', 'dist', 'angular-electron1', 'browser', 'preload.mjs'),
+            //preload: 'E:\\Angular\\AngularElectron1\\AngularElectron1\\dist\\angular-electron1\\browser\\preload.mjs' 
+            },
+    });
+    const indexPath = path.resolve(process.cwd(), 'dist', 'angular-electron1', 'browser', 'index.html');
+    win.loadFile(indexPath);
+    win.webContents.openDevTools();
+    win.on('closed', () => {
+        win = null;
+    });
 };
-
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on('activate', () => {
+app.on('ready', createWindow);
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+});
+app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-
-  // Quit when all windows are closed, except on macOS. There, it's common
-  // for applications and their menu bar to stay active until the user quits
-  // explicitly with Cmd + Q.
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
-  });
 });

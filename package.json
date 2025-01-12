@@ -1,13 +1,15 @@
 {
-  "main": "./out-tsc/electron-main/electron-main.js",
+  "main":  "./out-tsc/electron-main/electron-main.js",
   "name": "angular-electron1",
   "version": "0.0.0",
   "scripts": {
-    // execute the Angular build before starting Electron !
+    "post-processor": "node ./tools/post-processor.js",
+     "copy-preload": "ncp out-tsc/electron-main/electron/preload.js dist/angular-electron1/browser/preload.js",
     "build:angular": "ng build",
     "build:electron-main": "tsc -p tsconfig.electron.json",
-    "electron:start": "npm run build:electron-main && npx cross-env NODE_ENV=development electron .",
-    "electron:build": "electron .",
+    "build:all": "ng build && tsc -p tsconfig.electron.json",
+     "build:electron-preload": "tsc -p tsconfig.preload.json",
+    "electron:start": "npm run build:angular && npm run build:electron-main && npm run build:electron-preload && npm run copy-preload && npm run post-processor && npx cross-env NODE_ENV=development electron .",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -40,6 +42,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ncp": "^2.0.0",
     "typescript": "~5.5.2"
   }
 }

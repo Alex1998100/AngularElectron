@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json", // Inherit from base config
+  "compilerOptions": {
+    "isolatedModules": false,
+    "module": "system", 
+     "outFile": "./dist/angular-electron1/browser/preload.mjs"
+  },
+  // Don't include Angular files here
+  "include": ["src/electron/preload.ts"],
+  "exclude": ["src/angular-main.ts", "src/**/*.spec.ts", "src/app/**/*.ts"]
+}
